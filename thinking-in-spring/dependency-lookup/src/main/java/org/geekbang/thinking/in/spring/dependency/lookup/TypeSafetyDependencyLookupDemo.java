@@ -4,6 +4,7 @@ import org.geekbang.thinking.in.spring.ioc.overview.domain.User;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -49,7 +50,9 @@ public class TypeSafetyDependencyLookupDemo {
     }
 
     private static void displayObjectFactoryGetObject(AnnotationConfigApplicationContext applicationContext) {
-        printBeansException("displayObjectFactoryGetObject", () -> applicationContext.getBeanProvider(User.class).getObject());
+        // ObjectProvider is ObjectFactory
+        ObjectFactory<User> userObjectProvider = applicationContext.getBeanProvider(User.class);
+        printBeansException("displayObjectFactoryGetObject", () -> userObjectProvider.getObject());
     }
 
     private static void displayBeanFactoryGetBean(BeanFactory beanFactory) {
