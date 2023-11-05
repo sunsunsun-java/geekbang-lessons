@@ -14,6 +14,8 @@
         <module>spring-bean</module>
         <module>dependency-lookup</module>
         <module>dependency-injection</module>
+        <module>bean-lifecycle</module>
+        <module>confiuration-metadata</module>
     </modules>
 
     <properties>
