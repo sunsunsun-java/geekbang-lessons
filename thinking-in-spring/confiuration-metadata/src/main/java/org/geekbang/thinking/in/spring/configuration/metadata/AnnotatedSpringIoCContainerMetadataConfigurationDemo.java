@@ -1,9 +1,8 @@
 package org.geekbang.thinking.in.spring.configuration.metadata;
 
 import org.geekbang.thinking.in.spring.ioc.overview.domain.User;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 
 import java.util.Map;
 
@@ -13,7 +12,24 @@ import java.util.Map;
 // 将当前类作为 Configuration Class
 @ImportResource("classpath:/META-INF/dependency-lookup-context.xml")
 @Import(User.class)
+@PropertySource("classpath:/META-INF/user-bean-definitions.properties") // Java 8+ @Repeatable 支持
+@PropertySource("classpath:/META-INF/user-bean-definitions.properties")
+// @PropertySources(@PropertySource(...))
 public class AnnotatedSpringIoCContainerMetadataConfigurationDemo {
+
+    /**
+     * user.name 是 Java Properties 默认存在，当前用户：honghaosun，而非配置文件中定义"小马哥"
+     * @param id
+     * @param name
+     * @return
+     */
+    @Bean
+    public User configuredUser(@Value("${user.id}") Long id, @Value("${user.name}") String name) {
+        User user = new User();
+        user.setId(id);
+        user.setName(name);
+        return user;
+    }
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
