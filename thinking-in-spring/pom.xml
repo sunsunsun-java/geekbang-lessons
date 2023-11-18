@@ -21,6 +21,7 @@
         <module>data-binding</module>
         <module>conversion</module>
         <module>generic</module>
+        <module>annotation</module>
     </modules>
 
     <properties>
