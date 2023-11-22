@@ -23,6 +23,7 @@
         <module>generic</module>
         <module>annotation</module>
         <module>environment</module>
+        <module>questions</module>
     </modules>
 
     <properties>
