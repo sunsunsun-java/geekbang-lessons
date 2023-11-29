@@ -2,6 +2,10 @@ package org.geekbang.thinking.in.spring.annotation;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Spring 注解属性覆盖示例
  */
@@ -25,6 +29,36 @@ public class AttributeOverridesDemo {
 
         // 关闭 Spring 应用上下文
         context.close();
+
+        System.out.println(new AttributeOverridesDemo().permute(new int[]{1,2,3}));
+    }
+
+    private int[] nums;
+    private List<Integer> path;
+    private boolean[] onPath;
+    private List<List<Integer>> res = new ArrayList<>();
+
+    public List<List<Integer>> permute(int[] nums) {
+        this.nums = nums;
+        path = Arrays.asList(new Integer[nums.length]);
+        onPath = new boolean[nums.length];
+        dfs(0);
+        return res;
+    }
+
+    private void dfs(int i) {
+        if (i == nums.length) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int j = 0; j < nums.length; j++) {
+            if (!onPath[j]) {
+                path.set(i, nums[j]);
+                onPath[j] = true;
+                dfs(i + 1);
+                onPath[j] = false;
+            }
+        }
     }
 
 }
