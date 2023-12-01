@@ -16,4 +16,16 @@ public class AspectXmlConfig {
         System.out.println("@Around any public method : " + pjp.getSignature());
         return pjp.proceed();
     }
+
+    private void afterReturningAnyPublicMethod() {
+        System.out.println("@AfterReturning any public method.");
+    }
+
+    private void afterThrowingAnyPublicMethod() {
+        System.out.println("@AfterThrowing any public method.");
+    }
+
+    private void finalizeAnyPublicMethod() {
+        System.out.println("@After any public method.");
+    }
 }

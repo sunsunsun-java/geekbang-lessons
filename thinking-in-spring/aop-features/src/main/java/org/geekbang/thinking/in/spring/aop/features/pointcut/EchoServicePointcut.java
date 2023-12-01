@@ -10,7 +10,7 @@ public class EchoServicePointcut extends StaticMethodMatcherPointcut {
     private String methodName;
     
     private Class targetClass;
-    
+
     public EchoServicePointcut(String methodName, Class targetClass) {
         this.methodName = methodName;
         this.targetClass = targetClass;
