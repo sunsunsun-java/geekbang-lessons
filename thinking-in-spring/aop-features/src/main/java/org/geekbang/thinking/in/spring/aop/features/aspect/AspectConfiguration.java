@@ -28,6 +28,13 @@ public class AspectConfiguration {
     }
 
     @AfterReturning("anyPublicMethod()")
+    // AspectJAfterReturningAdvice is AfterReturningAdvice
+    // 一个 AfterReturningAdviceInterceptor 关联一个 AfterReturningAdvice
+    // Spring 封装 AfterReturningAdvice -> AfterReturningAdviceInterceptor
+    // AfterReturningAdviceInterceptor is MethodInterceptor
+    // AfterReturningAdviceInterceptor
+    //  -> AspectJAfterReturningAdvice
+    //   -> AbstractAspectJAdvice#invokeAdviceMethodWithGivenArgs
     public void afterReturningAnyPublicMethod() {
         System.out.println("@AfterReturning any public method.");
     }
