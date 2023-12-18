@@ -1,7 +1,13 @@
 package org.geekbang.mini.spring.beans;
 
 public interface BeanFactory {
-    Object getBean(String beanName) throws NoSuchBeanDefinitionException;
+    Object getBean(String beanName) throws BeansException;
 
-    void registerBeanDefinition(BeanDefinition beanDefinition);
+    boolean containsBean(String name);
+
+    boolean isSingleton(String name);
+
+    boolean isPrototype(String name);
+
+    Class<?> getType(String name);
 }
