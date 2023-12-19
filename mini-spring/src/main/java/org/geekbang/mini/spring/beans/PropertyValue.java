@@ -7,10 +7,13 @@ public class PropertyValue {
 
     private final Object value;
 
-    public PropertyValue(String type, String name, Object value) {
+    private final boolean isRef;
+
+    public PropertyValue(String type, String name, Object value, boolean isRef) {
         this.value = value;
         this.type = type;
         this.name = name;
+        this.isRef = isRef;
     }
 
     public Object getValue() {
@@ -23,5 +26,9 @@ public class PropertyValue {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isRef() {
+        return isRef;
     }
 }
