@@ -1,4 +1,6 @@
-package org.geekbang.mini.spring.beans;
+package org.geekbang.mini.spring.beans.factory;
+
+import org.geekbang.mini.spring.beans.BeansException;
 
 public interface BeanFactory {
     Object getBean(String beanName) throws BeansException;

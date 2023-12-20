@@ -1,4 +1,7 @@
-package org.geekbang.mini.spring.beans;
+package org.geekbang.mini.spring.beans.factory.config;
+
+import org.geekbang.mini.spring.beans.PropertyValues;
+import org.geekbang.mini.spring.beans.factory.config.ConstructorArgumentValues;
 
 public class BeanDefinition {
     String SCOPE_SINGLETON = "singleton";
@@ -8,7 +11,7 @@ public class BeanDefinition {
 
     private String[] dependsOn;
 
-    private ArgumentValues constructorArgumentValues;
+    private ConstructorArgumentValues constructorArgumentValues;
 
     private PropertyValues propertyValues;
 
@@ -82,12 +85,12 @@ public class BeanDefinition {
         return this.dependsOn;
     }
 
-    public void setConstructorArgumentValues(ArgumentValues constructorArgumentValues) {
+    public void setConstructorArgumentValues(ConstructorArgumentValues constructorArgumentValues) {
         this.constructorArgumentValues =
-                (constructorArgumentValues != null ? constructorArgumentValues : new ArgumentValues());
+                (constructorArgumentValues != null ? constructorArgumentValues : new ConstructorArgumentValues());
     }
 
-    public ArgumentValues getConstructorArgumentValues() {
+    public ConstructorArgumentValues getConstructorArgumentValues() {
         return this.constructorArgumentValues;
     }
 

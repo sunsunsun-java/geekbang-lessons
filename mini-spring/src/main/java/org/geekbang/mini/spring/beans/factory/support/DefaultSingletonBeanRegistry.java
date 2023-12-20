@@ -1,4 +1,6 @@
-package org.geekbang.mini.spring.beans;
+package org.geekbang.mini.spring.beans.factory.support;
+
+import org.geekbang.mini.spring.beans.factory.config.SingletonBeanRegistry;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

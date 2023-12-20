@@ -1,4 +1,4 @@
-package org.geekbang.mini.spring.beans;
+package org.geekbang.mini.spring.beans.factory.config;
 
 public interface SingletonBeanRegistry {
     void registerSingleton(String beanName, Object singletonObject);

@@ -1,18 +1,18 @@
-package org.geekbang.mini.spring.beans;
+package org.geekbang.mini.spring.beans.factory.config;
 
-public class ArgumentValue {
+public class ConstructorArgumentValue {
     private String type;
 
     private String name;
 
     private Object value;
 
-    public ArgumentValue(String type, Object value) {
+    public ConstructorArgumentValue(String type, Object value) {
         this.value = value;
         this.type = type;
     }
 
-    public ArgumentValue(String type, String name, Object value) {
+    public ConstructorArgumentValue(String type, String name, Object value) {
         this.value = value;
         this.type = type;
         this.name = name;

@@ -1,15 +1,21 @@
-package org.geekbang.mini.spring.beans;
+package org.geekbang.mini.spring.beans.factory.xml;
 
 import org.dom4j.Element;
+import org.geekbang.mini.spring.beans.*;
+import org.geekbang.mini.spring.beans.factory.config.AutowireCapableBeanFactory;
+import org.geekbang.mini.spring.beans.factory.config.BeanDefinition;
+import org.geekbang.mini.spring.beans.factory.config.ConstructorArgumentValue;
+import org.geekbang.mini.spring.beans.factory.config.ConstructorArgumentValues;
+import org.geekbang.mini.spring.beans.SimpleBeanFactory;
 import org.geekbang.mini.spring.core.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class XmlBeanDefinitionReader {
-    private final SimpleBeanFactory bf;
+    private final AutowireCapableBeanFactory bf;
 
-    public XmlBeanDefinitionReader(SimpleBeanFactory bf) {
+    public XmlBeanDefinitionReader(AutowireCapableBeanFactory bf) {
         this.bf = bf;
     }
 
@@ -22,12 +28,12 @@ public class XmlBeanDefinitionReader {
 
             // get constructor
             List<Element> constructorElements = element.elements("constructor-arg");
-            ArgumentValues AVS = new ArgumentValues();
+            ConstructorArgumentValues AVS = new ConstructorArgumentValues();
             for (Element e : constructorElements) {
                 String pType = e.attributeValue("type");
                 String pName = e.attributeValue("name");
                 String pValue = e.attributeValue("value");
-                AVS.addArgumentValue(new ArgumentValue(pType, pName, pValue));
+                AVS.addArgumentValue(new ConstructorArgumentValue(pType, pName, pValue));
             }
             beanDefinition.setConstructorArgumentValues(AVS);
 

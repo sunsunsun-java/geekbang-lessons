@@ -1,4 +1,4 @@
-package org.geekbang.mini.spring.beans;
+package org.geekbang.mini.spring.beans.factory;
 
 public class NoSuchBeanDefinitionException extends Exception {
 }
