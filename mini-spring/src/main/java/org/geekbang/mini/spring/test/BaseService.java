@@ -1,6 +1,9 @@
 package org.geekbang.mini.spring.test;
 
+import org.geekbang.mini.spring.beans.factory.annotation.Autowired;
+
 public class BaseService {
+    @Autowired
     private BaseBaseService bbs;
 
     public BaseBaseService getBbs() {

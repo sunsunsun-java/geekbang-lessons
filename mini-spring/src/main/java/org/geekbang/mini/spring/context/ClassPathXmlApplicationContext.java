@@ -27,7 +27,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationE
         reader.loadBeanDefinitions(classPathXmlResource);
         this.beanFactory = bf;
 
-        if (!isRefresh) {
+        if (isRefresh) {
             try {
                 refresh();
             } catch (BeansException | IllegalStateException e) {
