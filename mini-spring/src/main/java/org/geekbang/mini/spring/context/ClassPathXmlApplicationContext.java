@@ -1,10 +1,10 @@
 package org.geekbang.mini.spring.context;
 
-import org.geekbang.mini.spring.beans.*;
-import org.geekbang.mini.spring.beans.factory.BeanFactory;
+import org.geekbang.mini.spring.beans.BeansException;
 import org.geekbang.mini.spring.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
-import org.geekbang.mini.spring.beans.factory.config.AutowireCapableBeanFactory;
 import org.geekbang.mini.spring.beans.factory.config.BeanFactoryPostProcessor;
+import org.geekbang.mini.spring.beans.factory.config.ConfigurableListableBeanFactory;
+import org.geekbang.mini.spring.beans.factory.support.DefaultListableBeanFactory;
 import org.geekbang.mini.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.geekbang.mini.spring.core.ClassPathXmlResource;
 import org.geekbang.mini.spring.core.Resource;
@@ -12,8 +12,8 @@ import org.geekbang.mini.spring.core.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationEventPublisher {
-    private final AutowireCapableBeanFactory beanFactory;
+public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
+    private final DefaultListableBeanFactory beanFactory;
     private final List<BeanFactoryPostProcessor> beanFactoryPostProcessors = new ArrayList<>();
 
     public ClassPathXmlApplicationContext(String fileName) {
@@ -22,7 +22,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationE
 
     public ClassPathXmlApplicationContext(String fileName, boolean isRefresh) {
         Resource classPathXmlResource = new ClassPathXmlResource(fileName);
-        AutowireCapableBeanFactory bf = new AutowireCapableBeanFactory();
+        DefaultListableBeanFactory bf = new DefaultListableBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(bf);
         reader.loadBeanDefinitions(classPathXmlResource);
         this.beanFactory = bf;
@@ -36,61 +36,50 @@ public class ClassPathXmlApplicationContext implements BeanFactory, ApplicationE
         }
     }
 
-    public void registerBean(String beanName, Object obj) {
-        this.beanFactory.registerBean(beanName, obj);
+    @Override
+    public void registerListeners() {
+        ApplicationListener listener = new ApplicationListener();
+        this.getApplicationEventPublisher().addApplicationListener(listener);
     }
 
-    public List<BeanFactoryPostProcessor> getBeanFactoryPostProcessors() {
-        return this.beanFactoryPostProcessors;
+    @Override
+    public void initApplicationEventPublisher() {
+        ApplicationEventPublisher aep = new SimpleApplicationEventPublisher();
+        this.setApplicationEventPublisher(aep);
     }
 
-    public void addBeanFactoryPostProcessor(BeanFactoryPostProcessor postProcessor) {
-        this.beanFactoryPostProcessors.add(postProcessor);
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory bf) {
+
     }
 
-    public void refresh() throws BeansException, IllegalStateException {
-        registerBeanPostProcessors(this.beanFactory);
-        onRefresh();
+    @Override
+    public void registerBeanPostProcessors(ConfigurableListableBeanFactory bf) {
+        this.beanFactory.addBeanPostProcessor(new AutowiredAnnotationBeanPostProcessor());
     }
 
-    private void registerBeanPostProcessors(AutowireCapableBeanFactory bf) {
-        bf.addBeanPostProcessor(new AutowiredAnnotationBeanPostProcessor());
-    }
-
-    private void onRefresh() {
+    @Override
+    public void onRefresh() {
         this.beanFactory.refresh();
     }
 
     @Override
-    public Object getBean(String beanName) throws BeansException {
-        return this.beanFactory.getBean(beanName);
+    public ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException {
+        return this.beanFactory;
     }
 
     @Override
-    public boolean containsBean(String name) {
-        return this.beanFactory.containsBean(name);
+    public void addApplicationListener(ApplicationListener listener) {
+        this.getApplicationEventPublisher().addApplicationListener(listener);
     }
 
     @Override
-    public boolean isSingleton(String name) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean isPrototype(String name) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public Class<?> getType(String name) {
-        // TODO Auto-generated method stub
-        return null;
+    public void finishRefresh() {
+        publishEvent(new ContextRefreshEvent("Context Refreshed..."));
     }
 
     @Override
     public void publishEvent(ApplicationEvent event) {
-
+        this.getApplicationEventPublisher().publishEvent(event);
     }
 }

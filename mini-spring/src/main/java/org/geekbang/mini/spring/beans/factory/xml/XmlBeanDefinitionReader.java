@@ -7,15 +7,16 @@ import org.geekbang.mini.spring.beans.factory.config.BeanDefinition;
 import org.geekbang.mini.spring.beans.factory.config.ConstructorArgumentValue;
 import org.geekbang.mini.spring.beans.factory.config.ConstructorArgumentValues;
 import org.geekbang.mini.spring.beans.SimpleBeanFactory;
+import org.geekbang.mini.spring.beans.factory.support.DefaultListableBeanFactory;
 import org.geekbang.mini.spring.core.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class XmlBeanDefinitionReader {
-    private final AutowireCapableBeanFactory bf;
+    private final DefaultListableBeanFactory bf;
 
-    public XmlBeanDefinitionReader(AutowireCapableBeanFactory bf) {
+    public XmlBeanDefinitionReader(DefaultListableBeanFactory bf) {
         this.bf = bf;
     }
 
